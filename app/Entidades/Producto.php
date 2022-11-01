@@ -36,4 +36,58 @@ class Producto extends Model
           ]);
           return $this->idproducto = DB::getPdo()->lastInsertId();
       }
+
+      public function obtenerPorId($idproducto)
+      {
+          $sql = "SELECT
+                  idproducto,
+                  nombre,
+                  cantidad,
+                  precio,
+                  imagen,
+                  fk_idcategoria
+                  FROM $this->table WHERE idproducto = $idproducto";
+          $lstRetorno = DB::select($sql);
+  
+          if (count($lstRetorno) > 0) {
+              $this->idproducto = $lstRetorno[0]->idproducto;
+              $this->nombre = $lstRetorno[0]->nombre;
+              $this->cantidad = $lstRetorno[0]->cantidad;
+              $this->imagen = $lstRetorno[0]->imagen;
+              $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;
+              return $this;
+          }
+          return null;
+      }
+
+      public function obtenerTodos()
+    {
+        $sql = "SELECT
+                idproducto,
+                  nombre,
+                  cantidad,
+                  precio,
+                  imagen,
+                  fk_idcategoria
+                FROM $this->table  ORDER BY nombre";
+        $lstRetorno = DB::select($sql);
+        return $lstRetorno;
+    }
+      
+      public function guardar() {
+        $sql = "UPDATE productos SET
+            nombre='$this->nombre',
+            cantidad=$this->cantidad,
+            precio=$this->precio,
+            imagen=$this->imagen,
+            fk_idcategoria='$this->fk_idcategoria'
+            WHERE idproducto=?";
+        $affected = DB::update($sql, [$this->idproducto]);
+    }
+
+    public function eliminar()
+    {
+        $sql = "DELETE FROM $this->table WHERE idproducto=?";
+        $affected = DB::delete($sql, [$this->idproducto]);
+    }
 }

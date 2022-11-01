@@ -36,4 +36,59 @@ class Postulacion extends Model
           ]);
           return $this->idpostulacion = DB::getPdo()->lastInsertId();
       }
+
+      public function obtenerPorId($idpostulacion)
+      {
+          $sql = "SELECT
+                  idpostulacion,
+                  nombre,
+                  apellido,
+                  telefono,
+                  correo,
+                  curriculum
+                  FROM $this->table WHERE idpostulacion = $idpostulacion";
+          $lstRetorno = DB::select($sql);
+  
+          if (count($lstRetorno) > 0) {
+              $this->idpostulacion = $lstRetorno[0]->idpostulacion;
+              $this->nombre = $lstRetorno[0]->nombre;
+              $this->apellido = $lstRetorno[0]->apellido;
+              $this->telefono = $lstRetorno[0]->telefono;
+              $this->correo = $lstRetorno[0]->correo;
+              $this->curriculum = $lstRetorno[0]->curriculum;
+              return $this;
+          }
+          return null;
+      }
+
+      public function obtenerTodos()
+    {
+        $sql = "SELECT
+                  idpostulacion,
+                  nombre,
+                  apellido,
+                  telefono,
+                  correo,
+                  curriculum
+                FROM $this->table  ORDER BY nombre";
+        $lstRetorno = DB::select($sql);
+        return $lstRetorno;
+    }
+      
+      public function guardar() {
+        $sql = "UPDATE postulaciones SET
+            nombre='$this->nombre',
+            apellido=$this->apellido,
+            telefono=$this->telefono,
+            correo=$this->correo,
+            curriculum='$this->curriculum'
+            WHERE idpostulacion=?";
+        $affected = DB::update($sql, [$this->idpostulacion]);
+    }
+
+    public function eliminar()
+    {
+        $sql = "DELETE FROM $this->table WHERE idpostulacion=?";
+        $affected = DB::delete($sql, [$this->idpostulacion]);
+    }
 }
