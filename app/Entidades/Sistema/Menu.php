@@ -96,7 +96,7 @@ class Menu extends Model
         }
         return $resultado;
     }
-º
+
     public function obtenerPorId($idmenu)
     {
         $sql = "SELECT
