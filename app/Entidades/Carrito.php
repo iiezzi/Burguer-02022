@@ -47,9 +47,9 @@ class Carrito extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                  idcarrito,
-                  fk_idcliente
-                FROM $this->table  ORDER BY nombre";
+                  A.idcarrito,
+                  A.fk_idcliente
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

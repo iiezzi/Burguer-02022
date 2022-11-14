@@ -64,13 +64,13 @@ class Postulacion extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                  idpostulacion,
-                  nombre,
-                  apellido,
-                  telefono,
-                  correo,
-                  curriculum
-                FROM $this->table  ORDER BY nombre";
+                  A.idpostulacion,
+                  A.nombre,
+                  A.apellido,
+                  A.telefono,
+                  A.correo,
+                  A.curriculum
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

@@ -68,14 +68,14 @@ class Cliente extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                  idcliente,
-                  nombre,
-                  apellido,
-                  correo,
-                  dni,
-                  celular,
-                  clave
-                FROM $this->table  ORDER BY nombre";
+                  A.idcliente,
+                  A.nombre,
+                  A.apellido,
+                  A.correo,
+                  A.dni,
+                  A.celular,
+                  A.clave
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

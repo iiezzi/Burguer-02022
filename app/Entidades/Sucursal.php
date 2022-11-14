@@ -56,11 +56,11 @@ class Sucursal extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                  idsucursal,
-                  telefono,
-                  direccion,
-                  linkmapa
-                FROM $this->table  ORDER BY nombre";
+                  A.idsucursal,
+                  A.telefono,
+                  A.direccion,
+                  A.linkmapa
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

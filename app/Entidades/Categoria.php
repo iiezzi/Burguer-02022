@@ -48,9 +48,9 @@ class Categoria extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                  idcategoria,
-                  nombre
-                FROM $this->table  ORDER BY nombre";
+                  A.idcategoria,
+                  A.nombre
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

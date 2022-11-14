@@ -68,14 +68,14 @@ class Pedido extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                 idpedido,
-                  fecha,
-                  descripcion,
-                  total,
-                  fk_idsucursal,
-                  fk_idcliente,
-                  fk_idestado
-                FROM $this->table  ORDER BY nombre";
+                  A.idpedido,
+                  A.fecha,
+                  A.descripcion,
+                  A.total,
+                  A.fk_idsucursal,
+                  A.fk_idcliente,
+                  A.fk_idestado
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

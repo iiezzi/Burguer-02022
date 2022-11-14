@@ -63,13 +63,13 @@ class Producto extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                idproducto,
-                  nombre,
-                  cantidad,
-                  precio,
-                  imagen,
-                  fk_idcategoria
-                FROM $this->table  ORDER BY nombre";
+                  A.idproducto,
+                  A.nombre,
+                  A.cantidad,
+                  A.precio,
+                  A.imagen,
+                  A.fk_idcategoria
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

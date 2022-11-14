@@ -48,9 +48,9 @@ class Estado extends Model
       public function obtenerTodos()
     {
         $sql = "SELECT
-                  idestado,
-                  nombre
-                FROM $this->table  ORDER BY nombre";
+                  A.idestado,
+                  A.nombre
+                FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
