@@ -89,10 +89,52 @@ Route::group(array('domain' => '127.0.0.1'), function () {
 /* --------------------------------------------- */
 /* CONTROLADOR PATENTES                          */
 /* --------------------------------------------- */
-Route::get('/admin/patentes', 'ControladorPatente@index');
+
 Route::get('/admin/patente/nuevo', 'ControladorPatente@nuevo');
 Route::post('/admin/patente/nuevo', 'ControladorPatente@guardar');
 Route::get('/admin/patente/cargarGrilla', 'ControladorPatente@cargarGrilla')->name('patente.cargarGrilla');
 Route::get('/admin/patente/eliminar', 'ControladorPatente@eliminar');
 Route::get('/admin/patente/nuevo/{id}', 'ControladorPatente@editar');
 Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
+
+/* --------------------------------------------- */
+/* CONTROLADOR CLIENTES                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR PRODUCTOS                         */
+/* --------------------------------------------- */
+
+Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR PEDIDOS                           */
+/* --------------------------------------------- */
+
+Route::get('/admin/pedido/nuevo', 'ControladorPedido@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR POSTULACIONES                     */
+/* --------------------------------------------- */
+
+Route::get('/admin/postulacion/nuevo', 'ControladorPostulacion@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR SUCURSALES                        */
+/* --------------------------------------------- */
+
+Route::get('/admin/sucursal/nuevo', 'ControladorSucursal@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR CATEGORIAS                        */
+/* --------------------------------------------- */
+
+Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR ESTADOS                           */
+/* --------------------------------------------- */
+
+Route::get('/admin/estado/nuevo', 'ControladorEstado@nuevo');
