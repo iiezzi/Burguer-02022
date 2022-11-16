@@ -14,9 +14,13 @@ class Estado extends Model
           'idestado', 'nombre',
       ];
   
-      protected $hidden = [
-  
-      ];
+      protected $hidden = [];
+
+      public function cargarDesdeRequest($request)
+      {
+          $this->idestado = $request->input('id') != "0" ? $request->input('id') : $this->idestado;
+          $this->nombre = $request->input('txtNombre');
+      }
 
       public function insertar()
       {

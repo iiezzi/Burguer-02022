@@ -14,9 +14,7 @@ class Carrito extends Model
           'idcarrito', 'fk_idcliente',
       ];
   
-      protected $hidden = [
-  
-      ];
+      protected $hidden = [];
 
       public function insertar()
       {
