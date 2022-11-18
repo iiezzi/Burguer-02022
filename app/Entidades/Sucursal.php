@@ -29,12 +29,12 @@ class Sucursal extends Model
           $sql = "INSERT INTO $this->table(
                   telefono,
                   direccion,
-                  linkmapa,
+                  linkmapa
               ) VALUES (?, ?, ?);";
           $result = DB::insert($sql, [
               $this->telefono,
               $this->direccion,
-              $this->linkmapa,
+              $this->linkmapa
           ]);
           return $this->idsucursal = DB::getPdo()->lastInsertId();
       }
@@ -45,7 +45,7 @@ class Sucursal extends Model
                   idsucursal,
                   telefono,
                   direccion,
-                  linkmapa,
+                  linkmapa
                   FROM $this->table WHERE idsucursal = $idsucursal";
           $lstRetorno = DB::select($sql);
   
@@ -65,7 +65,7 @@ class Sucursal extends Model
                   A.idsucursal,
                   A.telefono,
                   A.direccion,
-                  A.linkmapa,
+                  A.linkmapa
                 FROM $this->table  ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
@@ -75,7 +75,7 @@ class Sucursal extends Model
         $sql = "UPDATE sucursales SET
             telefono='$this->telefono',
             direccion=$this->direccion,
-            linkmapa=$this->linkmapa,
+            linkmapa=$this->linkmapa
             WHERE idsucursal=?";
         $affected = DB::update($sql, [$this->idsucursal]);
     }
