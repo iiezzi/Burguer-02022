@@ -3,7 +3,7 @@
 @section('scripts')
 <script>
     globalId = '<?php echo isset($estado->idestado) && $estado->idestado > 0 ? $estado->idestado : 0; ?>';
-    <?php $globalId = isset($estado->idestado) ? $estado->idestado : "0";?>
+    <?php $globalId = isset($estado->idestado) ? $estado->idestado : "0"; ?>
 </script>
 @endsection
 @section('breadcrumb')
@@ -22,9 +22,9 @@
     <li class="btn-item"><a title="Salir" href="#" class="fa fa-arrow-circle-o-left" aria-hidden="true" onclick="javascript: $('#modalSalir').modal('toggle');"><span>Salir</span></a></li>
 </ol>
 <script>
-function fsalir(){
-    location.href ="/admin/sistema/menu";
-}
+    function fsalir() {
+        location.href = "/admin/sistema/menu";
+    }
 </script>
 @endsection
 @section('contenido')
@@ -35,41 +35,41 @@ if (isset($msg)) {
 }
 ?>
 <div class="panel-body">
-        <div id = "msg"></div>
-        <?php
-if (isset($msg)) {
-    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
-}
-?>
-      <form id="form1" method="POST">
-            <div class="row">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
-                <div class="form-group col-lg-6">
-                    <label>Nombre: *</label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
-                </div>
+    <div id="msg"></div>
+    <?php
+    if (isset($msg)) {
+        echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
+    }
+    ?>
+    <form id="form1" method="POST">
+        <div class="row">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+            <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+            <div class="form-group col-lg-6">
+                <label>Nombre: *</label>
+                <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
             </div>
-      </form>
-      <div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Eliminar registro?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">¿Deseas eliminar el registro actual?</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-            <button type="button" class="btn btn-primary" onclick="eliminar();">Sí</button>
-          </div>
         </div>
-      </div>
+    </form>
+</div>
+<div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar registro?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">¿Deseas eliminar el registro actual?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" onclick="eliminar();">Sí</button>
+            </div>
+        </div>
     </div>
+</div>
 <script>
-
     $("#form1").validate();
 
     function guardar() {
@@ -86,11 +86,13 @@ if (isset($msg)) {
     function eliminar() {
         $.ajax({
             type: "GET",
-            url: "{{ asset('admin/sistema/menu/eliminar') }}",
-            data: { id:globalId },
+            url: "{{ asset('admin/estado/eliminar') }}",
+            data: {
+                id: globalId
+            },
             async: true,
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 if (data.err = "0") {
                     msgShow("Registro eliminado exitosamente.", "success");
                     $("#btnEnviar").hide();
@@ -102,6 +104,5 @@ if (isset($msg)) {
             }
         });
     }
-
 </script>
 @endsection

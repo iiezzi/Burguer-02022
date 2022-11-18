@@ -19,7 +19,7 @@ class ControladorCategoria extends Controller
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio
-            $titulo = "Modificar cliente";
+            $titulo = "Modificar categoría";
             $entidad = new Categoria();
             $entidad->cargarDesdeRequest($request);
 

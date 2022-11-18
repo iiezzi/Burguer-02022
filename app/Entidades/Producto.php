@@ -14,9 +14,17 @@ class Producto extends Model
           'idproducto', 'nombre', 'cantidad', 'precio', 'imagen', 'fk_idcategoria',
       ];
   
-      protected $hidden = [
-  
-      ];
+      protected $hidden = [];
+
+      public function cargarDesdeRequest($request)
+      {
+          $this->idproducto = $request->input('id') != "0" ? $request->input('id') : $this->idproducto;
+          $this->nombre = $request->input('txtNombre');
+          $this->cantidad = $request->input('txtCantidad');
+          $this->precio = $request->input('txtPrecio');
+          $this->imagen = $request->input('txtImagen');
+          $this->fk_idcategoria = $request->input('lstCategoria');
+      }
 
       public function insertar()
       {

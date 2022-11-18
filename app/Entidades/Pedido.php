@@ -14,9 +14,18 @@ class Pedido extends Model
           'idpedido', 'fecha', 'descripcion', 'total', 'fk_idsucursal', 'fk_idcliente', 'fk_idestado',
       ];
   
-      protected $hidden = [
-  
-      ];
+      protected $hidden = [];
+
+      public function cargarDesdeRequest($request)
+      {
+          $this->idpedido = $request->input('id') != "0" ? $request->input('id') : $this->idpedido;
+          $this->fecha = $request->input('txtFecha');
+          $this->descripcion = $request->input('txtDescripcion');
+          $this->total = $request->input('txtTotal');
+          $this->fk_idsucursal = $request->input('lstSucursal');
+          $this->fk_idcliente = $request->input('lstCliente');
+          $this->fk_idestado = $request->input('lstEstado');
+      }
 
       public function insertar()
       {

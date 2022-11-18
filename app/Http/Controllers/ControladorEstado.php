@@ -19,7 +19,7 @@ class ControladorEstado extends Controller
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio
-            $titulo = "Modificar cliente";
+            $titulo = "Modificar estado";
             $entidad = new Estado();
             $entidad->cargarDesdeRequest($request);
 

@@ -14,9 +14,17 @@ class Postulacion extends Model
           'idpostulacion', 'nombre', 'apellido', 'telefono', 'correo', 'curriculum',
       ];
   
-      protected $hidden = [
-  
-      ];
+      protected $hidden = [];
+
+      public function cargarDesdeRequest($request)
+      {
+          $this->idpostulacion = $request->input('id') != "0" ? $request->input('id') : $this->idpostulacion;
+          $this->nombre = $request->input('txtNombre');
+          $this->apellido = $request->input('txtApellido');
+          $this->telefono = $request->input('txtTelefono');
+          $this->correo = $request->input('txtCorreo');
+          $this->curriculum = $request->input('txtCurriculum');
+      }
 
       public function insertar()
       {

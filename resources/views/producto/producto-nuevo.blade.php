@@ -61,7 +61,7 @@ if (isset($msg)) {
                 </div>
                 <div class="form-groupo col-lg-6">
                     <label>Imagen: *</label>
-                    <input type="file" id="" name="" class="form-control" value="" required>
+                    <input type="file" id="txtImagen" name="txtImagen" class="form-control" value="" required>
                 </div>
             </div>
             <div class="row">
@@ -71,4 +71,58 @@ if (isset($msg)) {
                 </div>
             </div>
       </form>
+      </div>
+    <div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar registro?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">¿Deseas eliminar el registro actual?</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" onclick="eliminar();">Sí</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+
+    $("#form1").validate();
+
+    function guardar() {
+        if ($("#form1").valid()) {
+            modificado = false;
+            form1.submit();
+        } else {
+            $("#modalGuardar").modal('toggle');
+            msgShow("Corrija los errores e intente nuevamente.", "danger");
+            return false;
+        }
+    }
+
+    function eliminar() {
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('admin/producto/eliminar') }}",
+            data: { id:globalId },
+            async: true,
+            dataType: "json",
+            success: function (data) {
+                if (data.err = "0") {
+                    msgShow("Registro eliminado exitosamente.", "success");
+                    $("#btnEnviar").hide();
+                    $("#btnEliminar").hide();
+                    $('#mdlEliminar').modal('toggle');
+                } else {
+                    msgShow("Error al eliminar", "success");
+                }
+            }
+        });
+    }
+
+</script>
 @endsection
