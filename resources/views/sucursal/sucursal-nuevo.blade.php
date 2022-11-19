@@ -46,19 +46,23 @@ if (isset($msg)) {
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
+                    <label>Nombre: *</label>
+                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                </div>
+                <div class="form-group col-lg-6">
                     <label>Teléfono: *</label>
                     <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" value="" required>
                 </div>
-                <div class="form-groupo col-lg-6">
+            </div>
+            <div class="row">
+            <div class="form-groupo col-lg-6">
                     <label>Dirección: *</label>
                     <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="" required>
                 </div>
-            </div>
-            <div class="row">
                 <div class="form-groupo col-lg-6">
                     <label>Google Maps: *</label>
                     <input type="text" id="txtLinkmapa" name="txtLinkmapa" class="form-control" value="" required>
-                </div>
+                </div>               
             </div>
       </form>
       </div>

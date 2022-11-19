@@ -67,7 +67,7 @@ if (isset($msg)) {
         <div class="row">
             <div class="form-groupo col-lg-6">
                 <label>Curriculum: *</label>
-                <input type="file" id="txtCurriculum" name="txtCurriculum" class="form-control" value="" required>
+                <input type="file" id="txtCurriculum" name="txtCurriculum" class="form-control-file" value="" required>
             </div>
         </div>
     </form>

@@ -24,7 +24,7 @@ class ControladorSucursal extends Controller
             $entidad->cargarDesdeRequest($request);
 
             //validaciones
-            if ($entidad->telefono == "") {
+            if ($entidad->nombre == "") {
                 $msg["ESTADO"] = MSG_ERROR;
                 $msg["MSG"] = "Complete todos los datos";
             } else {

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Pedido; 
+use App\Entidades\Sucursal; 
+use App\Entidades\Cliente; 
+use App\Entidades\Estado; 
 use App\Entidades\Sistema\Patente;
 use App\Entidades\Sistema\Usuario;
 use Illuminate\Http\Request;
@@ -14,7 +17,16 @@ class ControladorPedido extends Controller
     public function nuevo()
     {
         $titulo = "Nuevo pedido";
-                return view('pedido.pedido-nuevo', compact('titulo'));
+        $sucursal = new Sucursal();
+        $aSucursales = $sucursal -> obtenerTodos();
+
+        $cliente = new Cliente();
+        $aClientes = $cliente -> obtenerTodos();
+
+        $estado = new Estado();
+        $aEstados = $estado -> obtenerTodos();
+
+                return view('pedido.pedido-nuevo', compact('titulo', 'aSucursales', 'aClientes', 'aEstados'));
     }
     public function guardar(Request $request) {
         try {

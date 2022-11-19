@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Producto;
+use App\Entidades\Categoria;
 use App\Entidades\Sistema\Patente;
 use App\Entidades\Sistema\Usuario;
 use Illuminate\Http\Request;
@@ -14,7 +15,11 @@ class ControladorProducto extends Controller
     public function nuevo()
     {
         $titulo = "Nuevo producto";
-                return view('producto.producto-nuevo', compact('titulo'));
+
+        $categoria = new Categoria();
+        $aCategorias = $categoria -> obtenerTodos();
+
+                return view('producto.producto-nuevo', compact('titulo', 'aCategorias'));
     }
     public function guardar(Request $request) {
         try {

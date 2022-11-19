@@ -61,13 +61,18 @@ if (isset($msg)) {
                 </div>
                 <div class="form-groupo col-lg-6">
                     <label>Imagen: *</label>
-                    <input type="file" id="txtImagen" name="txtImagen" class="form-control" value="" required>
+                    <input type="file" id="txtImagen" name="txtImagen" class="form-control-file" value="" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-groupo col-lg-6">
                     <label>Categoria: *</label>
-                    <select name="lstCategoria" id="lstCategoria" class="form-control" value="" required> </select>
+                    <select name="lstCategoria" id="lstCategoria" class="form-control" value="" required>
+                        <option value="" disabled selected>Seleccionar</option>
+                        @foreach ($aCategorias as $item)
+                            <option value="{{ $item->idcategoria }}">{{ $item->nombre }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
       </form>

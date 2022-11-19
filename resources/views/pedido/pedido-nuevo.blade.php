@@ -34,31 +34,46 @@
         <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
         <div class="form-group col-lg-6">
             <label>Fecha: *</label>
-            <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="" required>
+            <input type="date" id="txtFecha" name="txtFecha" class="form-control" required>
         </div>
         <div class="form-groupo col-lg-6">
             <label>Descripción: *</label>
-            <textarea id="txtDescripcion" name="txtDescripcion" class="form-control" value="" required></textarea>
+            <textarea value="txtDescripcion" name="txtDescripcion" class="form-control"  required></textarea>
         </div>
     </div>
     <div class="row">
         <div class="form-groupo col-lg-6">
             <label>Total: *</label>
-            <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="" required>
+            <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
         </div>
         <div class="form-groupo col-lg-6">
             <label>Sucursal: *</label>
-            <select name="lstSucursal" id="lstSucursal" class="form-control" value="" required> </select>
+            <select name="lstSucursal" id="lstSucursal" class="form-control" required>
+                <option disabled selected>Seleccionar</option>
+            @foreach ($aSucursales as $item)
+                <option value="{{ $item->idsucursal }}">{{ $item->nombre }}</option>
+            @endforeach
+            </select>
         </div>
     </div>
     <div class="row">
         <div class="form-groupo col-lg-6">
             <label>Cliente: *</label>
-            <select name="lstCliente" id="lstCliente" class="form-control" value="" required> </select>
+            <select name="lstCliente" id="lstCliente" class="form-control"required>
+                <optiondisabled selected>Seleccionar</option>
+                @foreach ($aClientes as $item)
+                <option value="{{ $item->idcliente }}">{{ $item->nombre }} {{ $item->apellido }}</option>
+            @endforeach
+            </select>
         </div>
         <div class="form-groupo col-lg-6">
             <label>Estado: *</label>
-            <select name="lstEstado" id="lstEstado" class="form-control" value="" required> </select>
+            <select name="lstEstado" id="lstEstado" class="form-control"required>
+                <option disabled selected>Seleccionar</option>
+                @foreach ($aEstados as $item)
+                <option value="{{ $item->idestado }}">{{ $item->nombre }}</option>
+            @endforeach
+            </select>
         </div>
     </div>
 </form>
