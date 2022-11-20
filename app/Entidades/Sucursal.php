@@ -65,17 +65,17 @@ class Sucursal extends Model
       }
 
       public function obtenerTodos()
-    {
-        $sql = "SELECT
-                  A.idsucursal,
-                  A.nombre,
-                  A.telefono,
-                  A.direccion,
-                  A.linkmapa
-                FROM $this->table  ORDER BY A.nombre";
-        $lstRetorno = DB::select($sql);
-        return $lstRetorno;
-    }
+      {
+          $sql = "SELECT
+                    A.idsucursal,
+                    A.nombre,
+                    A.telefono,
+                    A.direccion,
+                    A.linkmapa
+                  FROM $this->table A ORDER BY A.nombre";
+          $lstRetorno = DB::select($sql);
+          return $lstRetorno;
+      }
       
       public function guardar() {
         $sql = "UPDATE sucursales SET

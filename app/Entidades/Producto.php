@@ -69,18 +69,17 @@ class Producto extends Model
       }
 
       public function obtenerTodos()
-    {
-        $sql = "SELECT
-                  A.idproducto,
-                  A.nombre,
-                  A.cantidad,
-                  A.precio,
-                  A.imagen,
-                  A.fk_idcategoria
-                FROM $this->table  ORDER BY A.nombre";
-        $lstRetorno = DB::select($sql);
-        return $lstRetorno;
-    }
+      {
+          $sql = "SELECT
+                    A.idproducto,
+                    A.nombre,
+                    A.cantidad,
+                    A.imagen,
+                    A.fk_idcategoria
+                  FROM $this->table A ORDER BY A.nombre";
+          $lstRetorno = DB::select($sql);
+          return $lstRetorno;
+      }
       
       public function guardar() {
         $sql = "UPDATE productos SET

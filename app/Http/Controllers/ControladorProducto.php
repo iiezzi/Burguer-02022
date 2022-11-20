@@ -21,6 +21,23 @@ class ControladorProducto extends Controller
 
                 return view('producto.producto-nuevo', compact('titulo', 'aCategorias'));
     }
+
+    public function index()
+    {
+        $titulo = "Listado de productos";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUCONSULTA")) {
+                $codigo = "MENUCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                return view('producto.producto-listar', compact('titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio

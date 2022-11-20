@@ -70,18 +70,18 @@ class Postulacion extends Model
       }
 
       public function obtenerTodos()
-    {
-        $sql = "SELECT
-                  A.idpostulacion,
-                  A.nombre,
-                  A.apellido,
-                  A.telefono,
-                  A.correo,
-                  A.curriculum
-                FROM $this->table  ORDER BY A.nombre";
-        $lstRetorno = DB::select($sql);
-        return $lstRetorno;
-    }
+      {
+          $sql = "SELECT
+                    A.idpostulacion,
+                    A.nombre,
+                    A.apellido,
+                    A.telefono,
+                    A.correo,
+                    A.curriculum
+                  FROM $this->table A ORDER BY A.nombre";
+          $lstRetorno = DB::select($sql);
+          return $lstRetorno;
+      }
       
       public function guardar() {
         $sql = "UPDATE postulaciones SET

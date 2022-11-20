@@ -75,19 +75,19 @@ class Pedido extends Model
       }
 
       public function obtenerTodos()
-    {
-        $sql = "SELECT
-                  A.idpedido,
-                  A.fecha,
-                  A.descripcion,
-                  A.total,
-                  A.fk_idsucursal,
-                  A.fk_idcliente,
-                  A.fk_idestado
-                FROM $this->table  ORDER BY A.nombre";
-        $lstRetorno = DB::select($sql);
-        return $lstRetorno;
-    }
+      {
+          $sql = "SELECT
+                    A.idpedido,
+                    A.fecha,
+                    A.descripcion,
+                    A.total,
+                    A.fk_idsucursal,
+                    A.fk_idcliente,
+                    A.fk_idestado
+                  FROM $this->table A ORDER BY A.nombre";
+          $lstRetorno = DB::select($sql);
+          return $lstRetorno;
+      }
       
       public function guardar() {
         $sql = "UPDATE pedidos SET

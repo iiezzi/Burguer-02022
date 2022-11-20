@@ -16,6 +16,23 @@ class ControladorSucursal extends Controller
         $titulo = "Nueva sucursal";
                 return view('sucursal.sucursal-nuevo', compact('titulo'));
     }
+
+    public function index()
+    {
+        $titulo = "Listado de sucursales";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUCONSULTA")) {
+                $codigo = "MENUCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                return view('sucursal.sucursal-listar', compact('titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio

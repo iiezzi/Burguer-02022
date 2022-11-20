@@ -84,7 +84,7 @@ class Cliente extends Model
                   A.dni,
                   A.celular,
                   A.clave
-                FROM $this->table  ORDER BY A.nombre";
+                FROM $this->table A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

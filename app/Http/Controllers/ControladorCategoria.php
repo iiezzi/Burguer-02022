@@ -16,6 +16,23 @@ class ControladorCategoria extends Controller
         $titulo = "Nueva categoría";
                 return view('categoria.categoria-nuevo', compact('titulo'));
     }
+
+    public function index()
+    {
+        $titulo = "Listado de categorias";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUCONSULTA")) {
+                $codigo = "MENUCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                return view('categoria.categoria-listar', compact('titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio

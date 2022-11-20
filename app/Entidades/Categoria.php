@@ -50,14 +50,14 @@ class Categoria extends Model
       }
 
       public function obtenerTodos()
-    {
-        $sql = "SELECT
-                  A.idcategoria,
-                  A.nombre
-                FROM $this->table  ORDER BY A.nombre";
-        $lstRetorno = DB::select($sql);
-        return $lstRetorno;
-    }
+      {
+          $sql = "SELECT
+                    A.idcategoria,
+                    A.nombre
+                  FROM $this->table A ORDER BY A.nombre";
+          $lstRetorno = DB::select($sql);
+          return $lstRetorno;
+      }
       
       public function guardar() {
         $sql = "UPDATE categorias SET
