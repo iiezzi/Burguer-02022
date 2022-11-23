@@ -34,7 +34,7 @@
         <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
         <div class="form-group col-lg-6">
             <label>Fecha: *</label>
-            <input type="date" id="txtFecha" name="txtFecha" class="form-control" required>
+            <input type="date" id="txtFecha" name="txtFecha" class="form-control" required value="{{$pedido->fecha}}">
         </div>
         <div class="form-groupo col-lg-6">
             <label>Descripción: *</label>
@@ -44,7 +44,7 @@
     <div class="row">
         <div class="form-groupo col-lg-6">
             <label>Total: *</label>
-            <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
+            <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="{{$pedido->total}}" required>
         </div>
         <div class="form-groupo col-lg-6">
             <label>Sucursal: *</label>

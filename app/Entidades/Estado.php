@@ -60,12 +60,7 @@ class Estado extends Model
       
       public function guardar() {
         $sql = "UPDATE estados SET
-            nombre='$this->nombre',
-            apellido=$this->apellido,
-            correo=$this->correo,
-            dni=$this->dni,
-            celular='$this->celular',
-            clave='$this->clave'
+            nombre='$this->nombre'
             WHERE idestado=?";
         $affected = DB::update($sql, [$this->idestado]);
     }
@@ -73,6 +68,31 @@ class Estado extends Model
     public function eliminar()
     {
         $sql = "DELETE FROM $this->table WHERE idestado=?";
-        $affected = DB::delete($sql, [$this->idcliidestadoente]);
+        $affected = DB::delete($sql, [$this->idestado]);
+    }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.idestado',
+            1 => 'A.nombre'
+        );
+        $sql = "SELECT DISTINCT
+                     A.idestado,
+                     A.nombre
+                    FROM estados A
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
     }
 }

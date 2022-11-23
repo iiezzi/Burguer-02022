@@ -99,4 +99,39 @@ class Postulacion extends Model
         $sql = "DELETE FROM $this->table WHERE idpostulacion=?";
         $affected = DB::delete($sql, [$this->idpostulacion]);
     }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.idpostulacion',
+            1 => 'A.nombre',
+            2 => 'A.telefono',
+            3 => 'A.correo',
+            4 => 'A.curriculum'
+        );
+        $sql = "SELECT DISTINCT
+                    A.idpostulacion,
+                    A.nombre,
+                    A.apellido,
+                    A.telefono,
+                    A.correo,
+                    A.curriculum
+                    FROM postulaciones A
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.apellido LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR C.telefono LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR D.correo LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }

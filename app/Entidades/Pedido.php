@@ -106,4 +106,50 @@ class Pedido extends Model
         $sql = "DELETE FROM $this->table WHERE idpedido=?";
         $affected = DB::delete($sql, [$this->idpedido]);
     }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.idpedido',
+            1 => 'A.fecha',
+            2 => 'A.descripcion',
+            3 => 'A.total',
+            4 => 'B.sucursal',
+            5 => 'C.cliente',
+            6 => 'D.estado'
+        );
+        $sql = "SELECT DISTINCT
+                    A.idpedido,
+                    A.fecha,
+                    A.descripcion,
+                    A.total,
+                    A.fk_idsucursal,
+                    B.nombre AS sucursal,
+                    A.fk_idcliente,
+                    C.nombre AS cliente,
+                    A.fk_idestado,
+                    D.nombre AS estado
+                    FROM pedidos A
+                    INNER JOIN sucursales B ON A.fk_idsucursal = B.idcusursal
+                    INNER JOIN clientes C ON A.fk_idcliente = C.idcliente
+                    INNER JOIN estados D ON A.fk_idestado = D.idestado
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.fecha LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.descripcion LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR C.total LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR D.sucursal LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR R.cliente LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR F.estado LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }

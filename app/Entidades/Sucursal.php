@@ -92,4 +92,39 @@ class Sucursal extends Model
         $sql = "DELETE FROM $this->table WHERE idsucursal=?";
         $affected = DB::delete($sql, [$this->idsucursal]);
     }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.idsucursal',
+            1 => 'A.nombre',
+            2 => 'A.telefono',
+            3 => 'A.direccion',
+            4 => 'A.linkmapa'
+        );
+        $sql = "SELECT DISTINCT
+                    A.idsucursal,
+                    A.nombre,
+                    A.telefono,
+                    A.direccion,
+                    A.linkmapa
+                    FROM sucursales A
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.idsucursal LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.telefono LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.direccion LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.linkmapa LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }

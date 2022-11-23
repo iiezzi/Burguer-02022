@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entidades\Categoria;
 use App\Entidades\Estado;
 use App\Entidades\Sistema\Patente;
 use App\Entidades\Sistema\Usuario;
@@ -14,7 +15,8 @@ class ControladorEstado extends Controller
     public function nuevo()
     {
         $titulo = "Nuevo estado";
-                return view('estado.estado-nuevo', compact('titulo'));
+        $estado = new Estado();
+                return view('estado.estado-nuevo', compact('titulo','estado'));
     }
 
     public function index()
@@ -31,6 +33,37 @@ class ControladorEstado extends Controller
         } else {
             return redirect('admin/login');
         }
+    }
+
+    public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Estado();
+        $aEstados = $entidad->obtenerFiltrado();
+
+        $data = array();
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+
+        for ($i = $inicio; $i < count($aEstados) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = "<a href='/admin/estado/" . $aEstados[$i]->idestado."' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aEstados[$i]->nombre;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aEstados), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aEstados), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
     }
 
     public function guardar(Request $request) {
@@ -73,5 +106,23 @@ class ControladorEstado extends Controller
 
         return view('estado.estado-nuevo', compact('msg', 'estado', 'titulo')) . '?id=' . $estado->idestado;
 
+    }
+
+    public function editar($id)
+    {
+        $titulo = "Modificar estado";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+                $codigo = "MENUMODIFICACION";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $estado = new Estado();
+                $estado->obtenerPorId($id);
+                return view('estado.estado-nuevo', compact('estado', 'titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 }

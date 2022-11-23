@@ -61,6 +61,7 @@ class Producto extends Model
               $this->idproducto = $lstRetorno[0]->idproducto;
               $this->nombre = $lstRetorno[0]->nombre;
               $this->cantidad = $lstRetorno[0]->cantidad;
+              $this->precio = $lstRetorno[0]->precio;
               $this->imagen = $lstRetorno[0]->imagen;
               $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;
               return $this;
@@ -74,6 +75,7 @@ class Producto extends Model
                     A.idproducto,
                     A.nombre,
                     A.cantidad,
+                    A.precio,
                     A.imagen,
                     A.fk_idcategoria
                   FROM $this->table A ORDER BY A.nombre";
@@ -96,5 +98,45 @@ class Producto extends Model
     {
         $sql = "DELETE FROM $this->table WHERE idproducto=?";
         $affected = DB::delete($sql, [$this->idproducto]);
+    }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.idproducto',
+            1 => 'A.nombre',
+            2 => 'A.cantidad',
+            3 => 'A.precio',
+            4 => 'A.imagen',
+            5 => 'A.categoria'
+        );
+        $sql = "SELECT DISTINCT
+                    A.idproducto,
+                    A.nombre,
+                    A.cantidad,
+                    A.precio,
+                    A.imagen,
+                    A.fk_idcategoria,
+                    B.nombre AS categoria
+                    FROM productos A
+                    INNER JOIN categorias B ON A.fk_idcategoria = B.idcategoria
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.idproducto LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.cantidad LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.precio LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.imagen LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.fk_idcategoria LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
     }
 }

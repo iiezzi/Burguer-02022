@@ -14,7 +14,8 @@ class ControladorPostulacion extends Controller
     public function nuevo()
     {
         $titulo = "Nueva postulación";
-                return view('postulacion.postulacion-nuevo', compact('titulo'));
+        $postulacion = new Postulacion();
+                return view('postulacion.postulacion-nuevo', compact('titulo','postulacion'));
     }
 
     public function index()
@@ -31,6 +32,40 @@ class ControladorPostulacion extends Controller
         } else {
             return redirect('admin/login');
         }
+    }
+
+    public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Postulacion();
+        $aPostulaciones = $entidad->obtenerFiltrado();
+
+        $data = array();
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+
+        for ($i = $inicio; $i < count($aPostulaciones) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = "<a href='/admin/postulacion/" . $aPostulaciones[$i]->idpostulacion."' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aPostulaciones[$i]->nombre . " " . $aPostulaciones[$i]->apellido;
+            $row[] = $aPostulaciones[$i]->telefono;
+            $row[] = $aPostulaciones[$i]->correo;
+            $row[] = "<a href='file/" . $aPostulaciones[$i]->idpostulacion."' class='btn btn-success'><i class='fa-regular fa-file-zipper'></i></a>";
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aPostulaciones), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aPostulaciones), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
     }
 
     public function guardar(Request $request) {
@@ -73,5 +108,24 @@ class ControladorPostulacion extends Controller
 
         return view('postulacion.postulacion-nuevo', compact('msg', 'postulacion', 'titulo')) . '?id=' . $postulacion->idpostulacion;
 
+    }
+
+    
+    public function editar($id)
+    {
+        $titulo = "Modificar postulación";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+                $codigo = "MENUMODIFICACION";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $postulacion = new Postulacion();
+                $postulacion->obtenerPorId($id);
+                return view('postulacion.postulacion-nuevo', compact('postulacion', 'titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
     }
 }
