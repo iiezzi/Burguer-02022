@@ -41,7 +41,7 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
-      <form id="form1" method="POST">
+      <form id="form1" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
@@ -61,7 +61,7 @@ if (isset($msg)) {
                 </div>
                 <div class="form-groupo col-lg-6">
                     <label>Imagen: *</label>
-                    <input type="file" id="txtImagen" name="txtImagen" class="form-control-file" value="{{$producto->imagen}}" required>
+                    <input type="file" id="txtImagen" name="archivo" class="form-control-file" value="{{$producto->imagen}}" required>
                 </div>
             </div>
             <div class="row">

@@ -55,11 +55,11 @@ class ControladorProducto extends Controller
 
         for ($i = $inicio; $i < count($aProductos) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = "<a href='/admin/producto/" . $aProductos[$i]->idpedido."' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = "<a href='/admin/producto/" . $aProductos[$i]->idproducto."' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
             $row[] = $aProductos[$i]->nombre;
             $row[] = $aProductos[$i]->cantidad;
             $row[] = "$" . number_format($aProductos[$i]->precio, 2,",",".");
-            $row[] = $aProductos[$i]->imagen;
+            $row[] = "<img src='/files/".$aProductos[$i]->imagen."' class='img-thumbnail'>";
             $row[] = $aProductos[$i]->categoria;
             $cont++;
             $data[] = $row;
@@ -81,12 +81,30 @@ class ControladorProducto extends Controller
             $entidad = new Producto();
             $entidad->cargarDesdeRequest($request);
 
+            if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) { //Se adjunta imagen
+                $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
+                 $nombre = date("Ymdhmsi") . ".$extension";
+                 $archivo = $_FILES["archivo"]["tmp_name"];
+                 move_uploaded_file($archivo, env('APP_PATH') . "/public/files/$nombre"); //guardaelarchivo
+                 $entidad->imagen = $nombre;
+             }
+  
             //validaciones
             if ($entidad->nombre == "") {
                 $msg["ESTADO"] = MSG_ERROR;
                 $msg["MSG"] = "Complete todos los datos";
             } else {
                 if ($_POST["id"] > 0) {
+                    $productAnt = new Producto();
+                    $productAnt->obtenerPorId($entidad->idproducto);
+
+                    if($_FILES["archivo"]["error"] === UPLOAD_ERR_OK){
+                        //Eliminar imagen anterior
+                        @unlink(env('APP_PATH') . "/public/files/$productAnt->imagen");                          
+                    } else {
+                        $entidad->imagen = $productAnt->imagen;
+                    }
+
                     //Es actualizacion
                     $entidad->guardar();
 
@@ -129,6 +147,29 @@ class ControladorProducto extends Controller
                 $producto->obtenerPorId($id);
                 return view('producto.producto-nuevo', compact('producto', 'titulo'));
             }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function eliminar(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (Usuario::autenticado() == true) {
+            if (Patente::autorizarOperacion("MENUELIMINAR")) {
+
+                $entidad = new Producto();
+                $entidad->cargarDesdeRequest($request);
+                @unlink(env('APP_PATH')."/public/files/$entidad->imagen");
+                $entidad->eliminar();
+
+                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+            } else {
+                $codigo = "ELIMINARPROFESIONAL";
+                $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+            }
+            echo json_encode($aResultado);
         } else {
             return redirect('admin/login');
         }

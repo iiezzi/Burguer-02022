@@ -128,10 +128,9 @@ class Producto extends Model
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( A.idproducto LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR A.cantidad LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR A.precio LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR A.imagen LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR A.fk_idcategoria LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR C.cantidad LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR D.precio LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR E.fk_idcategoria LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
 
