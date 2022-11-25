@@ -51,13 +51,13 @@ if (isset($msg)) {
                 </div>
                 <div class="form-groupo col-lg-6">
                     <label>Cantidad: *</label>
-                    <input type="number" id="txtNumber" name="txtNumber" class="form-control" value="{{$producto->cantidad}}" required>
+                    <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="{{$producto->cantidad}}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-groupo col-lg-6">
                     <label>Precio: *</label>
-                    <input type="number" id="txtNumber" name="txtNumber" class="form-control" value="{{$producto->precio}}" required>
+                    <input type="number" id="txtPrecio" name="txtPrecio" class="form-control" value="{{$producto->precio}}" required>
                 </div>
                 <div class="form-groupo col-lg-6">
                     <label>Imagen: *</label>

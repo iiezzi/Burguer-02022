@@ -86,9 +86,9 @@ class Postulacion extends Model
       public function guardar() {
         $sql = "UPDATE postulaciones SET
             nombre='$this->nombre',
-            apellido=$this->apellido,
-            telefono=$this->telefono,
-            correo=$this->correo,
+            apellido='$this->apellido',
+            telefono='$this->telefono',
+            correo='$this->correo',
             curriculum='$this->curriculum'
             WHERE idpostulacion=?";
         $affected = DB::update($sql, [$this->idpostulacion]);

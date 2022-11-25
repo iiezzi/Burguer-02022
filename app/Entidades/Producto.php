@@ -88,7 +88,7 @@ class Producto extends Model
             nombre='$this->nombre',
             cantidad=$this->cantidad,
             precio=$this->precio,
-            imagen=$this->imagen,
+            imagen='$this->imagen',
             fk_idcategoria='$this->fk_idcategoria'
             WHERE idproducto=?";
         $affected = DB::update($sql, [$this->idproducto]);

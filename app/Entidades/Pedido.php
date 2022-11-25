@@ -131,7 +131,7 @@ class Pedido extends Model
                     A.fk_idestado,
                     D.nombre AS estado
                     FROM pedidos A
-                    INNER JOIN sucursales B ON A.fk_idsucursal = B.idcusursal
+                    INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
                     INNER JOIN clientes C ON A.fk_idcliente = C.idcliente
                     INNER JOIN estados D ON A.fk_idestado = D.idestado
                 WHERE 1=1
